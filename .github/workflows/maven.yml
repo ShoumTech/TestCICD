@@ -1,0 +1,71 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+name: Java CI with Maven
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: maven
+        
+# Build and deploy docker image for employeeservice
+    - name: Build with Maven for employeeservice
+      run: mvn -B package --file employeeservice/pom.xml
+      
+    - name: Build and Push Docker Image - employeeservice
+      uses: mr-smithers-excellent/docker-build-push@v6
+      with:
+        image: employeeservice
+        addLatest: true
+        tags: v1, release
+        registry: 722674084159.dkr.ecr.us-east-2.amazonaws.com
+        dockerfile: employeeservice/Dockerfile
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      
+# Build and deploy docker image for filemanagerservice
+    - name: Build with Maven for filemanagerservice
+      run: mvn -B package --file filemanagerservice/pom.xml
+      
+    - name: Build and Push Docker Image - filemanagerservice
+      uses: mr-smithers-excellent/docker-build-push@v6
+      with:
+        image: filemanagerservice
+        addLatest: true
+        tags: v1, release
+        registry: 722674084159.dkr.ecr.us-east-2.amazonaws.com
+        dockerfile: filemanagerservice/Dockerfile
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+   
+# Build and deploy docker image for messagingservice 
+    - name: Build with Maven - messagingservice
+      run: mvn -B package --file messagingservice/pom.xml
+      
+    - name: Build and Push Docker Image - messagingservice
+      uses: mr-smithers-excellent/docker-build-push@v6
+      with:
+        image: messagingservice
+        addLatest: true
+        tags: v1, release
+        registry: 722674084159.dkr.ecr.us-east-2.amazonaws.com
+        dockerfile: messagingservice/Dockerfile
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
