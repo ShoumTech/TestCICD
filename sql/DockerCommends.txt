@@ -1,0 +1,60 @@
+ docker run -p 3307:3306  --name mysqldb  -e MYSQL_ROOT_PASSWORD=aB1l1tyS3cr3t -e MYSQL_USER=devuser -e MYSQL_PASSWORD=devpassword -d mysql:5.7
+
+
+docker run -d -p 9411:9411 openzipkin/zipkin
+
+
+
+docker run -d  -p 9901:8082 -v /temp:/temp filemanagerservice:1.0-RELEASE
+
+
+docker run -d  -p 9902:8081 messagingservice:1.0-RELEASE
+
+docker run -d  -p 9900:8080 employeeservice:1.0-RELEASE
+
+docker run -d  -p 8761:8761 -v serviceregistry:1.0-RELEASE
+
+docker run  -p 9901:8080 -v /temp:/temp filemanagerservice:1.0-RELEASE
+
+
+
+
+docker run -p 8080:8080 vijayponnusamy1990/vijayponnusamy
+ docker run -d -p 9900:8080 vijayponnusamy1990/vijayponnusamy
+
+ docker build -f .\Dockerfile -t employeeservice .
+ docker tag employeeservice vijayponnusamy1990/vijayponnusamy
+ docker push vijayponnusamy1990/vijayponnusamy:latest
+ 
+ docker pull vijayponnusamy1990/vijayponnusamy:latest
+
+ 
+ 
+ $ docker run -p 9900:8080 mydockerapp
+
+
+docker run -d --name file-upload-service -v /home/storage:/home/storage -p 9104:9104 file-upload-service:latest
+
+
+docker build -f .\Dockerfile -t filemanagerservice .
+ docker save -o target/filemanagerservice.tar  filemanagerservice
+ docker  load -i filemanagerservice.tar
+ docker run  -p 9901:8080 -v /temp:/temp filemanagerservice
+ 
+ 
+ docker run -p 3000:3000  praveen/ability-fe-v3
+
+
+docker run -d  -p 9901:8082 -v /temp:/temp filemanagerservice:1.0-RELEASE
+
+
+docker run -d  -p 9902:8081 messagingservice:1.0-RELEASE
+
+docker run -d  -p 9900:8080 employeeservice:1.0-RELEASE
+
+docker run -d  -p 8761:8761 -v serviceregistry:1.0-RELEASE
+
+docker run  -p 9901:8080 -v /temp:/temp filemanagerservice:1.0-RELEASE
+
+ 
+ 
